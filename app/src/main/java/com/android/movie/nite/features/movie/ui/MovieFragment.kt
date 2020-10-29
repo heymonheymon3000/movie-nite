@@ -1,9 +1,7 @@
 package com.android.movie.nite.features.movie.ui
 
-import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +16,7 @@ import com.android.movie.nite.databinding.FragmentMovieBinding
 import com.android.movie.nite.features.movie.ui.adapter.MovieAdapter
 import com.android.movie.nite.features.movie.ui.adapter.MovieClick
 import com.android.movie.nite.features.movie.viewmodels.MovieViewModel
+import com.android.movie.nite.utils.calculateNoOfColumns
 import com.android.movie.nite.utils.dpFromPx
 import com.google.android.material.snackbar.Snackbar
 
@@ -77,11 +76,5 @@ class MovieFragment : Fragment() {
         binding.rvMovies.adapter = MovieAdapter(MovieClick {
             // TODO add event listener
         })
-    }
-
-    private fun calculateNoOfColumns(context: Context, columnWidthDp: Float): Int {
-        val displayMetrics: DisplayMetrics = context.resources.displayMetrics
-        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
-        return (screenWidthDp / columnWidthDp + 0.5).toInt()
     }
 }

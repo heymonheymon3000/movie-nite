@@ -1,6 +1,7 @@
 package com.android.movie.nite.utils
 
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.movie.nite.R
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import java.lang.StringBuilder
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -20,8 +22,9 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
-//        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        val imgUri = "https://image.tmdb.org/t/p/original$imgUrl"
+        val imgUri = StringBuilder("image.tmdb.org/t/p/original")
+            .append(imgUrl).toString()
+            .toUri().buildUpon().scheme("https").build()
 
         Glide.with(imgView.context)
             .load(imgUri)

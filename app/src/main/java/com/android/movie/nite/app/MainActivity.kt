@@ -10,40 +10,35 @@ import com.android.movie.nite.R
 import com.android.movie.nite.databinding.ActivityMainBinding
 import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginActivity
 import com.firebase.ui.auth.AuthUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private val bottomNavMethod = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-        when (menuItem.itemId) {
-            R.id.movie -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
-            }
-            R.id.fav_movie -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
-            }
-            R.id.setting -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
-            }
-            R.id.sign_out -> {
-                AuthUI.getInstance().signOut(applicationContext).addOnCompleteListener {
-                    lifecycleScope.launch  {
-                        startActivity(Intent(applicationContext, FirebaseLoginActivity::class.java))
-                        finish()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding.bottomNav.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.movie -> {
+                    findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
+                }
+                R.id.fav_movie -> {
+                    findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
+                }
+                R.id.setting -> {
+                    findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
+                }
+                R.id.sign_out -> {
+                    AuthUI.getInstance().signOut(applicationContext).addOnCompleteListener {
+                        lifecycleScope.launch {
+                            startActivity(Intent(applicationContext, FirebaseLoginActivity::class.java))
+                            finish()
+                        }
                     }
                 }
             }
+            true
         }
-        true
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,
-            R.layout.activity_main
-        )
-
-        binding.bottomNav.setOnNavigationItemSelectedListener (bottomNavMethod)
     }
 }
-

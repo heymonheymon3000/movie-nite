@@ -1,6 +1,7 @@
 package com.android.movie.nite.utils
 
 import android.content.Context
+import android.util.DisplayMetrics
 
 private val PUNCTUATION = listOf(", ", "; ", ": ", " ")
 fun String.smartTruncate(length: Int): String {
@@ -34,8 +35,10 @@ fun dpFromPx(context: Context, px: Float): Float {
     return px / context.resources.displayMetrics.density
 }
 
-fun pxFromDp(context: Context, dp: Float): Float {
-    return dp * context.resources.displayMetrics.density
+fun calculateNoOfColumns(context: Context, columnWidthDp: Float): Int {
+    val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+    val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+    return (screenWidthDp / columnWidthDp + 0.5).toInt()
 }
 
 

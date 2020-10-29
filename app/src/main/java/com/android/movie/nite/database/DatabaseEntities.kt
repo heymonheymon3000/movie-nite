@@ -19,10 +19,6 @@ data class DatabaseMovie constructor(
     val release_date: String
 ) : Parcelable
 
-
-/**
- * Map DatabaseMovies to domain Movie entities
- */
 fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
     return map {
         Movie(

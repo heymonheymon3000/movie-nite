@@ -1,6 +1,5 @@
 package com.android.movie.nite.features.authentication.firebase.model
 
-
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth
 import androidx.lifecycle.LiveData

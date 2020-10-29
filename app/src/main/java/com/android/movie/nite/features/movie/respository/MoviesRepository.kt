@@ -1,7 +1,5 @@
 package com.android.movie.nite.features.movie.respository
 
-import android.graphics.Color
-import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.android.movie.nite.BuildConfig
@@ -14,9 +12,6 @@ import com.android.movie.nite.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * Repository for fetching movies from the network and storing on disk
- */
 class MoviesRepository(private val database: MoviesDatabase) {
     val movies: LiveData<List<Movie>> = Transformations.map(database.movieDao.getMovies()) {
         it.asDomainModel()
