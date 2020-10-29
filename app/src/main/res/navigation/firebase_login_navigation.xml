@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/firebase_login_navigation"
+    app:startDestination="@id/firebaseLoginFragment">
+
+
+    <fragment
+        android:id="@+id/firebaseLoginFragment"
+        android:name="com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginFragment"
+        android:label="FirebaseLoginFragment" />
+</navigation>

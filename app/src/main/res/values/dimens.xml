@@ -1,0 +1,6 @@
+<resources>
+  <!-- Movie poster image grid. -->
+  <dimen name="default_poster_grid_width">120dp</dimen>
+  <dimen name="default_poster_grid_height">180dp</dimen>
+  <dimen name="default_poster_grid_spacing">4dp</dimen>
+</resources>

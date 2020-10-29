@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "177294088675",
+    "firebase_url": "https://movie-nite-ebf13.firebaseio.com",
+    "project_id": "movie-nite-ebf13",
+    "storage_bucket": "movie-nite-ebf13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177294088675:android:786d9e0025827d757c28d6",
+        "android_client_info": {
+          "package_name": "com.android.movie.nite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177294088675-mg5i7qjvog4si3trf010rtrpoafl089d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.movie.nite",
+            "certificate_hash": "37f347b812bbce7579a5b55fcb2d5517f8054ed9"
+          }
+        },
+        {
+          "client_id": "177294088675-02v50qe4qchputsg9uqvfuff14l92vpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH7DzTLMyiibMCHnhtSri7Ode6R6DSmy0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177294088675-02v50qe4qchputsg9uqvfuff14l92vpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
