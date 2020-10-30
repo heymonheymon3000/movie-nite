@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
@@ -94,7 +95,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$version_room"
 
     // WorkManager
-    implementation "android.arch.work:work-runtime-ktx:$version_work"
+    implementation "androidx.work:work-runtime-ktx:$version_work"
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
 
@@ -104,4 +105,23 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.27.0'
 
     implementation 'com.google.android.material:material:1.2.1'
+
+    // dagger hilt
+    implementation 'com.google.dagger:hilt-android:2.28-alpha'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
+    implementation 'androidx.hilt:hilt-work:1.0.0-alpha02'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.28-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+
+}
+
+kapt {
+    correctErrorTypes true
 }

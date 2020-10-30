@@ -9,9 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import com.android.movie.nite.app.MainActivity
 import com.android.movie.nite.features.authentication.firebase.model.FirebaseViewModel
 import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
     private val firebaseViewModel by viewModels<FirebaseViewModel>()
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,18 +20,17 @@ import com.android.movie.nite.features.movie.viewmodels.MovieViewModel
 import com.android.movie.nite.utils.calculateNoOfColumns
 import com.android.movie.nite.utils.dpFromPx
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
-
-    private val viewModel: MovieViewModel by lazy {
-        val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, MovieViewModel.Factory(activity.application)).get(MovieViewModel::class.java)
-    }
+    private val viewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -43,8 +43,9 @@ class MovieFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.showNoInternetSnackbar.observe(viewLifecycleOwner, { showMessage ->
-            if(showMessage) {
-                Snackbar.make(binding.root, "Please connect to internet", Snackbar.LENGTH_LONG).show()
+            if (showMessage) {
+                Snackbar.make(binding.root, "Please connect to internet", Snackbar.LENGTH_LONG)
+                    .show()
                 viewModel.showNoInternetSnackbarComplete()
             }
         })
@@ -55,8 +56,10 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val spanCount = calculateNoOfColumns(requireContext(),
-            dpFromPx(requireContext(), resources.getDimension(R.dimen.default_poster_grid_width)))
+        val spanCount = calculateNoOfColumns(
+            requireContext(),
+            dpFromPx(requireContext(), resources.getDimension(R.dimen.default_poster_grid_width))
+        )
 
         binding.rvMovies.itemAnimator = null;
         binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), spanCount);
@@ -68,7 +71,8 @@ class MovieFragment : Fragment() {
                 outRect: Rect,
                 view: View,
                 parent: RecyclerView,
-                state: RecyclerView.State) {
+                state: RecyclerView.State
+            ) {
                 outRect.set(spacing, spacing, spacing, spacing)
             }
         })

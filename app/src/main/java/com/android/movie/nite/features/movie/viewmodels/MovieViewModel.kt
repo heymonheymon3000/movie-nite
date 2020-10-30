@@ -1,24 +1,30 @@
 package com.android.movie.nite.features.movie.viewmodels
 
 import android.app.Application
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.android.movie.nite.database.getDatabase
 import com.android.movie.nite.features.movie.respository.MoviesRepository
-import com.android.movie.nite.network.Variables
+import com.android.movie.nite.utils.Constants
 import kotlinx.coroutines.*
 
-class MovieViewModel (application: Application): AndroidViewModel(application) {
+class MovieViewModel @ViewModelInject constructor(
+    application: Application,
+    private val moviesRepository: MoviesRepository,
+    @Assisted private val savedStateHandle: SavedStateHandle)
+    : AndroidViewModel(application) {
+
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-    private val database = getDatabase(application)
-    private val moviesRepository = MoviesRepository(database)
 
     private val _showNoInternetSnackbar = MutableLiveData<Boolean>()
     val showNoInternetSnackbar: LiveData<Boolean>
         get() = _showNoInternetSnackbar
 
+    val movielist = moviesRepository.movies
+
     init {
-        if(Variables.isNetworkConnected) {
+        if(Constants.isNetworkConnected) {
             viewModelScope.launch {
                 moviesRepository.refreshMovies()
             }
@@ -27,9 +33,6 @@ class MovieViewModel (application: Application): AndroidViewModel(application) {
         }
     }
 
-    val movielist = moviesRepository.movies
-
-
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
@@ -37,15 +40,5 @@ class MovieViewModel (application: Application): AndroidViewModel(application) {
 
     fun showNoInternetSnackbarComplete() {
         _showNoInternetSnackbar.value = false
-    }
-
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MovieViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MovieViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
     }
 }

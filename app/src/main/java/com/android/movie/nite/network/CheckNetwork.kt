@@ -6,6 +6,7 @@ import android.net.ConnectivityManager.NetworkCallback
 import android.net.Network
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.android.movie.nite.utils.Constants
 
 class CheckNetwork(val context: Context) {
     @RequiresApi(Build.VERSION_CODES.N)
@@ -16,17 +17,17 @@ class CheckNetwork(val context: Context) {
             connectivityManager.registerDefaultNetworkCallback(@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             object : NetworkCallback() {
                 override fun onAvailable(network: Network) {
-                    Variables.isNetworkConnected = true // Global Static Variable
+                    Constants.isNetworkConnected = true // Global Static Variable
                 }
 
                 override fun onLost(network: Network) {
-                    Variables.isNetworkConnected = false // Global Static Variable
+                    Constants.isNetworkConnected = false // Global Static Variable
                 }
             }
             )
-            Variables.isNetworkConnected = false
+            Constants.isNetworkConnected = false
         } catch (e: Exception) {
-            Variables.isNetworkConnected = false
+            Constants.isNetworkConnected = false
         }
     }
 }

@@ -6,20 +6,27 @@ import com.android.movie.nite.BuildConfig
 import com.android.movie.nite.database.MoviesDatabase
 import com.android.movie.nite.database.asDomainModel
 import com.android.movie.nite.features.movie.domain.Movie
-import com.android.movie.nite.network.Network
+import com.android.movie.nite.network.MovieService
 import com.android.movie.nite.network.NetworkMovieContainer
 import com.android.movie.nite.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MoviesRepository(private val database: MoviesDatabase) {
-    val movies: LiveData<List<Movie>> = Transformations.map(database.movieDao.getMovies()) {
+@Singleton
+class MoviesRepository @Inject constructor(private val database: MoviesDatabase,
+                                           private val networkProvider: Retrofit) {
+
+    val movies: LiveData<List<Movie>> =
+        Transformations.map(database.movieDao.getMovies()) {
         it.asDomainModel()
     }
 
     suspend fun refreshMovies() = withContext(Dispatchers.IO) {
-        // Check network connection
-        val movies  = Network.movies.getMoviesAsync(BuildConfig.MOVIE_API_KEY).await()
+        val network = networkProvider.create(MovieService::class.java)
+        val movies  = network.getMoviesAsync(BuildConfig.MOVIE_API_KEY).await()
         val netMovies = NetworkMovieContainer(movies.results)
         database.movieDao.insertAll(netMovies.asDatabaseModel())
     }

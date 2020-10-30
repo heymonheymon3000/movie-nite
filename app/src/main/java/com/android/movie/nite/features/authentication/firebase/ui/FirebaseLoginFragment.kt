@@ -16,15 +16,17 @@ import com.android.movie.nite.app.MainActivity
 import com.android.movie.nite.R
 import com.android.movie.nite.databinding.FragmentFirebaseLoginBinding
 import com.android.movie.nite.features.authentication.firebase.model.FirebaseViewModel
-import com.android.movie.nite.network.Variables
+import com.android.movie.nite.utils.Constants
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@AndroidEntryPoint
 class FirebaseLoginFragment : Fragment() {
     private lateinit var binding: FragmentFirebaseLoginBinding
     private val firebaseViewModel by viewModels<FirebaseViewModel>()
@@ -57,7 +59,7 @@ class FirebaseLoginFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.authButton.setOnClickListener {
-            if (Variables.isNetworkConnected) {
+            if (Constants.isNetworkConnected) {
                 launchSignInFlow()
             } else {
                 Snackbar.make(it, "Please connect to internet", Snackbar.LENGTH_LONG).show()

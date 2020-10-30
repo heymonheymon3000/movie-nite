@@ -6,12 +6,14 @@ import androidx.annotation.RequiresApi
 import androidx.work.*
 import com.android.movie.nite.features.movie.work.RefreshDataWorker
 import com.android.movie.nite.network.CheckNetwork
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+@HiltAndroidApp
 class MovieApplication : Application() {
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
@@ -46,10 +48,9 @@ class MovieApplication : Application() {
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
             RefreshDataWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest
-        )
+            repeatingRequest)
     }
 }

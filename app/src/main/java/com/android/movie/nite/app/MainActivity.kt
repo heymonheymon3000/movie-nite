@@ -10,8 +10,10 @@ import com.android.movie.nite.R
 import com.android.movie.nite.databinding.ActivityMainBinding
 import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginActivity
 import com.firebase.ui.auth.AuthUI
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
