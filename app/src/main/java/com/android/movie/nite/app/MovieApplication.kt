@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.work.*
+import com.android.movie.nite.BuildConfig
 import com.android.movie.nite.features.movie.work.RefreshDataWorker
 import com.android.movie.nite.network.CheckNetwork
 import dagger.hilt.android.HiltAndroidApp
@@ -20,7 +21,11 @@ class MovieApplication : Application() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+
+        if(BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
         delayedInit()
     }
 

@@ -29,7 +29,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class FirebaseLoginFragment : Fragment() {
     private lateinit var binding: FragmentFirebaseLoginBinding
-    private val firebaseViewModel by viewModels<FirebaseViewModel>()
+    private val firebaseViewModel: FirebaseViewModel by viewModels()
 
     companion object {
         const val SIGN_IN_RESULT_CODE = 1001
