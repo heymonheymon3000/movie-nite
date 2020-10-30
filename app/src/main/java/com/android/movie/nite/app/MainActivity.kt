@@ -1,8 +1,8 @@
 package com.android.movie.nite.app
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -18,7 +18,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main
+        )
 
         binding.bottomNav.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -34,7 +37,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.sign_out -> {
                     AuthUI.getInstance().signOut(applicationContext).addOnCompleteListener {
                         lifecycleScope.launch {
-                            startActivity(Intent(applicationContext, FirebaseLoginActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    applicationContext,
+                                    FirebaseLoginActivity::class.java
+                                )
+                            )
                             finish()
                         }
                     }

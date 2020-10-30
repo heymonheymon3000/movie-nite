@@ -34,6 +34,6 @@ class RefreshDataWorker(
     }
 
     companion object {
-        const val WORK_NAME = "RefreshDataWorkerXXX"
+        const val WORK_NAME = "RefreshDataWorkerTask"
     }
 }
