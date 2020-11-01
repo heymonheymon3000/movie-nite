@@ -65,7 +65,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
 
     // Moshi for parsing the JSON format
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -114,10 +114,10 @@ dependencies {
     kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
 
     // For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.28-alpha'
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.28.3-alpha'
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
     // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28.3-alpha'
     kaptTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
 
 }

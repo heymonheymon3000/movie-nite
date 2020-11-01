@@ -21,5 +21,11 @@
     <string name="new_movies">New Movies</string>
     <string name="favorite_movies">Favorite Movies</string>
     <string name="settings">Settings</string>
-    <string name="work_completed">"Work Completed Successfully!!!"</string>
+    <string name="work_completed">"Movie Refresh Completed Successfully</string>
+    <string name="movie_refresh_worker_notification_channel_id">MOVIE_REFRESH_WORKER</string>
+    <string name="movie_refresh_worker_notification_channel_name">Movie Refresh Worker</string>
+    <string name="movie_refresh_notification_channel_id">MOVIE_REFRESH</string>
+    <string name="movie_refresh_notification_channel_name">Movie Refresh</string>
+
+    <string name="notification_title">MOVIE NITE</string>
 </resources>
