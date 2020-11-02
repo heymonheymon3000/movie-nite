@@ -9,7 +9,7 @@ import androidx.core.app.NotificationCompat
 import com.android.movie.nite.R
 import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginActivity
 
-private val NOTIFICATION_ID = 0
+private const val NOTIFICATION_ID = 0
 
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
     val contentIntent = Intent(applicationContext, FirebaseLoginActivity::class.java)

@@ -22,7 +22,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
-        val imgUri = StringBuilder("image.tmdb.org/t/p/original")
+        val imgUri = StringBuilder(Constants.IMAGE_URL)
             .append(imgUrl).toString()
             .toUri().buildUpon().scheme("https").build()
 

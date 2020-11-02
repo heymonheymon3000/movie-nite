@@ -77,13 +77,11 @@ class MovieApplication : Application() {
     private fun setupNotificationChannels() {
         createChannel(
             getString(R.string.movie_refresh_worker_notification_channel_id),
-            getString(R.string.movie_refresh_worker_notification_channel_name)
-        )
+            getString(R.string.movie_refresh_worker_notification_channel_name))
 
         createChannel(
             getString(R.string.movie_refresh_notification_channel_id),
-            getString(R.string.movie_refresh_notification_channel_name)
-        )
+            getString(R.string.movie_refresh_notification_channel_name))
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -91,8 +89,7 @@ class MovieApplication : Application() {
             val notificationChannel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            )
+                NotificationManager.IMPORTANCE_HIGH)
 
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
