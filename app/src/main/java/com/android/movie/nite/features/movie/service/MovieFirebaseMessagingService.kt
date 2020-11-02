@@ -9,7 +9,7 @@ import timber.log.Timber
 
 class MovieFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
-        Timber.i("Refreshed token: $token")
+        //Timber.i("Refreshed token: $token")
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
