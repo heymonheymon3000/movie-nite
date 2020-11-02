@@ -40,5 +40,3 @@ fun calculateNoOfColumns(context: Context, columnWidthDp: Float): Int {
     val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
     return (screenWidthDp / columnWidthDp + 0.5).toInt()
 }
-
-

@@ -44,15 +44,10 @@ class FirebaseLoginFragment : Fragment() {
         )
 
         firebaseViewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
-            when (authenticationState) {
-                FirebaseViewModel.AuthenticationState.AUTHENTICATED -> {
-                    lifecycleScope.launch  {
-                        startActivity(Intent(context, MainActivity::class.java))
-                        activity?.finish()
-                    }
-                }
-                else -> {
-                    // Do nothing stay here
+            if(FirebaseViewModel.AuthenticationState.AUTHENTICATED == authenticationState) {
+                lifecycleScope.launch  {
+                    startActivity(Intent(context, MainActivity::class.java))
+                    activity?.finish()
                 }
             }
         })

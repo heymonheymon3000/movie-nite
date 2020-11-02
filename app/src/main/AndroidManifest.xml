@@ -7,7 +7,7 @@
 
     <application
         android:name=".app.MovieApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -22,10 +22,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".features.authentication.firebase.ui.FirebaseLoginActivity"
             android:theme="@style/LoginTheme"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".app.MainActivity"/>
+
+        <service
+            android:name=".features.movie.service.MovieFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/common_google_signin_btn_icon_dark"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/movie_refresh_notification_channel_id" />
     </application>
 
 </manifest>

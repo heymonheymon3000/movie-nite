@@ -26,6 +26,7 @@
     <string name="movie_refresh_worker_notification_channel_name">Movie Refresh Worker</string>
     <string name="movie_refresh_notification_channel_id">MOVIE_REFRESH</string>
     <string name="movie_refresh_notification_channel_name">Movie Refresh</string>
-
+    <string name="message_subscribe_failed">Failed to subscribe to topic</string>
+    <string name="message_subscribed">Subscribed to topic</string>
     <string name="notification_title">MOVIE NITE</string>
 </resources>

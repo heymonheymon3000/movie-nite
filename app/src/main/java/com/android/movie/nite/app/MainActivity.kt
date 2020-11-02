@@ -19,11 +19,14 @@ import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginA
 import com.android.movie.nite.utils.Constants
 import com.android.movie.nite.utils.sendNotification
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private val TOPIC : String = "movie_refresh"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -65,6 +68,13 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.movie_refresh_worker_notification_channel_name)
         )
 
+        createChannel(
+            getString(R.string.movie_refresh_notification_channel_id),
+            getString(R.string.movie_refresh_notification_channel_name)
+        )
+
+        subscribeTopic()
+
         WorkManager.getInstance(applicationContext).getWorkInfoByIdLiveData(Constants.workerId)
             .observe(this, Observer { info ->
                 if (info != null && info.state.isFinished) {
@@ -94,5 +104,15 @@ class MainActivity : AppCompatActivity() {
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
+    }
+
+    private fun subscribeTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+            .addOnCompleteListener { task ->
+                var msg = getString(R.string.message_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.message_subscribe_failed)
+                }
+            }
     }
 }
