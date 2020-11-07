@@ -1,6 +1,5 @@
 package com.android.movie.nite.features.authentication.firebase.model
 
-import android.app.Application
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
@@ -8,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 
 class FirebaseViewModel @ViewModelInject constructor(
-    application: Application,
     @Assisted private val savedStateHandle: SavedStateHandle
     ): ViewModel() {
 

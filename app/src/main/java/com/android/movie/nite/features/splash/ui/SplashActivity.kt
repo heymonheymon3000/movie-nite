@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.android.movie.nite.R
 import com.android.movie.nite.app.MainActivity
 import com.android.movie.nite.features.authentication.firebase.model.FirebaseViewModel
 import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginActivity
@@ -19,6 +20,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
         firebaseViewModel.authenticationState.observe(this, Observer { authenticationState ->
             when (authenticationState) {

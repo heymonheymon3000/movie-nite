@@ -1,10 +1,7 @@
 package com.android.movie.nite.app
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,16 +16,19 @@ import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginA
 import com.android.movie.nite.utils.Constants
 import com.android.movie.nite.utils.sendNotification
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
+        binding = DataBindingUtil.setContentView(
             this, R.layout.activity_main)
 
         binding.bottomNav.setOnNavigationItemSelectedListener { menuItem ->
@@ -59,6 +59,15 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
+            .addOnCompleteListener { task ->
+                var msg = getString(R.string.message_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.message_subscribe_failed)
+                }
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+            }
+
         WorkManager.getInstance(applicationContext).getWorkInfoByIdLiveData(Constants.workerId)
             .observe(this, Observer { info ->
                 if (info != null && info.state.isFinished) {
@@ -69,5 +78,10 @@ class MainActivity : AppCompatActivity() {
                     notificationManager.sendNotification(applicationContext.getString(R.string.work_completed), applicationContext)
                 }
             })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.TOPIC)
     }
 }

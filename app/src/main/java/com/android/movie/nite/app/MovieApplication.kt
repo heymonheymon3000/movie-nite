@@ -40,7 +40,6 @@ class MovieApplication : Application() {
         applicationScope.launch {
             CheckNetwork(applicationContext).registerNetworkCallback()
             setupNotificationChannels()
-            subscribeTopic()
             setupRecurringWork()
         }
     }
@@ -99,15 +98,5 @@ class MovieApplication : Application() {
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
-    }
-
-    private fun subscribeTopic() {
-        FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
-            .addOnCompleteListener { task ->
-                var msg = getString(R.string.message_subscribed)
-                if (!task.isSuccessful) {
-                    msg = getString(R.string.message_subscribe_failed)
-                }
-            }
     }
 }
