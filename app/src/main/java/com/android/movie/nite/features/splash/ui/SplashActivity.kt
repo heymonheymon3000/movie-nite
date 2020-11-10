@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.android.movie.nite.R
-import com.android.movie.nite.app.MainActivity
+import com.android.movie.nite.features.main.ui.MainActivity
 import com.android.movie.nite.features.authentication.firebase.model.FirebaseViewModel
 import com.android.movie.nite.features.authentication.firebase.ui.FirebaseLoginActivity
 import dagger.hilt.android.AndroidEntryPoint

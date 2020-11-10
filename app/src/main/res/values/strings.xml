@@ -29,4 +29,5 @@
     <string name="message_subscribe_failed">Failed to subscribe to topic</string>
     <string name="message_subscribed">Subscribed to topic</string>
     <string name="notification_title">MOVIE NITE</string>
+    <string name="hell">hell</string>
 </resources>

@@ -1,23 +1,26 @@
-package com.android.movie.nite.features.movie.ui
+package com.android.movie.nite.features.movieDetail.ui
 
 import android.graphics.Rect
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.android.movie.nite.R
-import com.android.movie.nite.databinding.FragmentMovieBinding
+import com.android.movie.nite.databinding.FragmentMovieDetailBinding
+import com.android.movie.nite.features.movie.ui.MovieFragmentDirections
 import com.android.movie.nite.features.movie.ui.adapter.MovieAdapter
 import com.android.movie.nite.features.movie.ui.adapter.MovieClick
-import com.android.movie.nite.features.movie.viewmodels.MovieViewModel
+import com.android.movie.nite.features.movieDetail.viewModels.MovieDetailViewModel
 import com.android.movie.nite.utils.calculateNoOfColumns
 import com.android.movie.nite.utils.dpFromPx
 import com.google.android.material.snackbar.Snackbar
@@ -25,9 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class MovieFragment : Fragment() {
-    private lateinit var binding: FragmentMovieBinding
-    private val viewModel: MovieViewModel by viewModels()
+class MovieDetailFragment : Fragment() {
+    private lateinit var binding: FragmentMovieDetailBinding
+    private val viewModel: MovieDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +39,7 @@ class MovieFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_movie,
+            R.layout.fragment_movie_detail,
             container,
             false
         )
@@ -44,15 +47,21 @@ class MovieFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewModel.showNoInternetSnackbar.observe(viewLifecycleOwner, { showMessage ->
-            if (showMessage) {
-                Snackbar.make(binding.root, "Please connect to internet", Snackbar.LENGTH_LONG)
-                    .show()
-                viewModel.showNoInternetSnackbarComplete()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieFragment())
+                }
             }
-        })
+        )
 
         setupRecyclerView()
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+
 
         return binding.root
     }
@@ -63,10 +72,10 @@ class MovieFragment : Fragment() {
             dpFromPx(requireContext(), resources.getDimension(R.dimen.default_poster_grid_width))
         )
 
-        binding.rvMovies.itemAnimator = null;
-        binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), spanCount);
-        binding.rvMovies.setHasFixedSize(true)
-        binding.rvMovies.addItemDecoration(object : ItemDecoration() {
+        binding.rvMovies1.itemAnimator = null;
+        binding.rvMovies1.layoutManager = GridLayoutManager(requireContext(), spanCount);
+        binding.rvMovies1.setHasFixedSize(true)
+        binding.rvMovies1.addItemDecoration(object : RecyclerView.ItemDecoration() {
             val spacing = resources.getDimensionPixelSize(R.dimen.default_poster_grid_spacing) / 2
 
             override fun getItemOffsets(
@@ -79,7 +88,7 @@ class MovieFragment : Fragment() {
             }
         })
 
-        binding.rvMovies.adapter = MovieAdapter(MovieClick {
+        binding.rvMovies1.adapter = MovieAdapter(MovieClick {
             findNavController().navigate(
                 MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(it.title, it.id))
         })

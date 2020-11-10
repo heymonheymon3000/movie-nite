@@ -5,7 +5,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import com.android.movie.nite.app.MainActivity
+import com.android.movie.nite.features.main.ui.MainActivity
 import com.android.movie.nite.features.movie.ui.MovieFragment
 import com.android.movie.nite.features.splash.ui.SplashActivity
 import dagger.hilt.android.testing.HiltAndroidRule

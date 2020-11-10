@@ -24,11 +24,28 @@ class MoviesRepository @Inject constructor(private val database: MoviesDatabase,
         it.asDomainModel()
     }
 
+    val movie: (Int) -> LiveData<Movie> = { movieId: Int ->
+        Transformations.map(database.movieDao.getMovie(movieId)) {
+            it.asDomainModel()
+        }
+    }
+
+
+//    LiveData userLiveData = ...;
+//    LiveData userName = Transformations.map(userLiveData, user -> {
+//        return user.firstName + " " + user.lastName
+//    });
+
     suspend fun refreshMovies() = withContext(Dispatchers.IO) {
         val network = networkProvider.create(MovieService::class.java)
         val movies  = network.getMoviesAsync(BuildConfig.MOVIE_API_KEY).await()
         val netMovies = NetworkMovieContainer(movies.results)
         database.movieDao.insertAll(netMovies.asDatabaseModel())
+
+    }
+
+    suspend fun getMovie(id: Int) = withContext(Dispatchers.IO) {
+        database.movieDao.getMovie(id)
     }
 
     suspend fun deleteAll() = withContext(Dispatchers.IO) {

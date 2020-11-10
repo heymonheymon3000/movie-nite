@@ -32,3 +32,18 @@ fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
         )
     }
 }
+
+fun DatabaseMovie.asDomainModel(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        vote_average = vote_average,
+        poster_path = poster_path,
+        overview = overview,
+        adult = adult,
+        release_date = release_date
+    )
+}
+
+
+

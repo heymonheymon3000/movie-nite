@@ -26,7 +26,7 @@
         <activity android:name=".features.authentication.firebase.ui.FirebaseLoginActivity"
             android:theme="@style/LoginTheme"
             android:configChanges="orientation|screenSize"/>
-        <activity android:name=".app.MainActivity"/>
+        <activity android:name=".features.main.ui.MainActivity"/>
 
         <service
             android:name=".features.movie.service.MovieFirebaseMessagingService"

@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.android.movie.nite.app.MainActivity
+import com.android.movie.nite.features.main.ui.MainActivity
 import com.android.movie.nite.R
 import com.android.movie.nite.databinding.FragmentFirebaseLoginBinding
 import com.android.movie.nite.features.authentication.firebase.model.FirebaseViewModel

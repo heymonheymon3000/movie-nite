@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation.xml"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
     app:startDestination="@id/movieFragment">
 
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.android.movie.nite.features.movie.ui.MovieFragment"
-        android:label="MovieFragment" />
+        android:label="MovieFragment"
+        tools:layout="@layout/fragment_movie" >
+        <action
+            android:id="@+id/action_movieFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.android.movie.nite.features.movieDetail.ui.MovieDetailFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_movieFragment"
+            app:destination="@id/movieFragment"
+            app:popUpTo="@id/movieFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="movie_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>
