@@ -14,6 +14,7 @@ data class DatabaseMovie constructor(
     val title: String,
     val vote_average: Double,
     val poster_path: String?,
+    val backdrop_path: String?,
     val overview: String,
     val adult: Boolean,
     val release_date: String
@@ -26,6 +27,7 @@ fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
             title = it.title,
             vote_average = it.vote_average,
             poster_path = it.poster_path,
+            backdrop_path = it.backdrop_path,
             overview = it.overview,
             adult = it.adult,
             release_date = it.release_date
@@ -39,6 +41,7 @@ fun DatabaseMovie.asDomainModel(): Movie {
         title = title,
         vote_average = vote_average,
         poster_path = poster_path,
+        backdrop_path = backdrop_path,
         overview = overview,
         adult = adult,
         release_date = release_date

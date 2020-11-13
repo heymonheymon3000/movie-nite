@@ -3,12 +3,8 @@ package com.android.movie.nite.features.movieDetail.viewModels
 import android.app.Application
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.android.movie.nite.features.movie.respository.MoviesRepository
-import com.android.movie.nite.utils.Constants
-import kotlinx.coroutines.launch
 
 class MovieDetailViewModel @ViewModelInject constructor(
     application: Application,
@@ -20,11 +16,6 @@ class MovieDetailViewModel @ViewModelInject constructor(
 
     val movielist = moviesRepository.movies
 
-    init {
-        if(Constants.isNetworkConnected) {
-            viewModelScope.launch {
-                moviesRepository.refreshMovies()
-            }
-        }
-    }
+    val stars: Int?
+        get() = movie.value?.vote_average?.toInt()?.div(2)
 }

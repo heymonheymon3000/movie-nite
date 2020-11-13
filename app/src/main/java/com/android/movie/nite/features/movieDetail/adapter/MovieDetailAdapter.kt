@@ -2,14 +2,13 @@ package com.android.movie.nite.features.movieDetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android.movie.nite.R
 import com.android.movie.nite.databinding.HeaderBinding
 import com.android.movie.nite.databinding.ListItemMovieBinding
 import com.android.movie.nite.features.movie.domain.Movie
+import com.android.movie.nite.features.movie.ui.adapter.MovieClick
 import com.android.movie.nite.features.movieDetail.viewModels.MovieDetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,7 @@ private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
 class MovieDetailAdapter(private val movieDetailViewModel: MovieDetailViewModel,
-                         val callback: MovieClickListener) : ListAdapter<DataItem,
+                         val callback: MovieClick) : ListAdapter<DataItem,
         RecyclerView.ViewHolder>(MovieDetailDiffCallback()) {
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
@@ -73,9 +72,9 @@ class MovieDetailAdapter(private val movieDetailViewModel: MovieDetailViewModel,
     }
 
     class ViewHolder private constructor(val binding: ListItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie, callback: MovieClickListener) {
+        fun bind(movie: Movie, callback: MovieClick) {
             binding.movie = movie
-//            binding.movieCallback = callback
+            binding.movieCallback = callback
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -99,10 +98,6 @@ class MovieDetailDiffCallback : DiffUtil.ItemCallback<DataItem>() {
     override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         return oldItem == newItem
     }
-}
-
-class MovieClickListener(val block: (Movie) -> Unit) {
-    fun onClick(movie: Movie) = block(movie)
 }
 
 sealed class DataItem {

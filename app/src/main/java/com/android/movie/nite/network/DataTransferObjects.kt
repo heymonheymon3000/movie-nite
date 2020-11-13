@@ -20,6 +20,7 @@ data class NetworkMovie(
     val title: String,
     val vote_average: Double,
     val poster_path: String?,
+    val backdrop_path: String?,
     val overview: String = "",
     val adult: Boolean,
     val release_date: String = ""
@@ -32,6 +33,7 @@ fun NetworkMovieContainer.asDomainModel(): List<Movie> {
             title = it.title,
             vote_average = it.vote_average,
             poster_path = it.poster_path,
+            backdrop_path = it.backdrop_path,
             overview = it.overview,
             adult = it.adult,
             release_date = it.release_date
@@ -46,6 +48,7 @@ fun NetworkMovieContainer.asDatabaseModel(): List<DatabaseMovie> {
             title = it.title,
             vote_average = it.vote_average,
             poster_path = it.poster_path,
+            backdrop_path = it.backdrop_path,
             overview = it.overview,
             adult = it.adult,
             release_date = it.release_date
