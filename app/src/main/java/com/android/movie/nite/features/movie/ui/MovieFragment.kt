@@ -81,7 +81,7 @@ class MovieFragment : Fragment() {
 
         binding.rvMovies.adapter = MovieAdapter(MovieClick {
             findNavController().navigate(
-                MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(it.title, it.id))
+                MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(it.id, it.title))
         })
     }
 }

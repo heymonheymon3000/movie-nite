@@ -3,4 +3,28 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="text_white">@color/white</color>
+    <color name="white">#ffffff</color>
+
+
+
+
+
+
+    <color name="colorImageBackground">#B6B6B6</color>
+    <color name="colorBannerBackground">#3F51B5</color>
+
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="dark_gray">#6c6c6c</color>
+    <color name="deep_gray">#818181</color>
+    <color name="gray">#949494</color>
+    <color name="light_gray">#b6b6b6</color>
+
+    <color name="text_dark">@color/black</color>
+    <color name="text_deep_gray">@color/deep_gray</color>
+    <color name="text_gray">@color/gray</color>
+    <color name="text_light_gray">@color/light_gray</color>
+
+
 </resources>

@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.work.WorkManager
 import com.android.movie.nite.R
 import com.android.movie.nite.databinding.ActivityMainBinding
@@ -22,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,8 +29,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navigationController: NavController
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Timber.i("onCreate called!!!")
 
         binding = DataBindingUtil.setContentView(
             this, R.layout.activity_main)
@@ -89,12 +94,17 @@ class MainActivity : AppCompatActivity() {
 //            navigationController)
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
+        Timber.i("onDestroy called!!!")
+
         FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.TOPIC)
     }
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        return navigationController.navigateUp()
 //    }
+
+
 }
