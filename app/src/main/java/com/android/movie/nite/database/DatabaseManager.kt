@@ -9,6 +9,9 @@ interface MovieDao {
     @Query("SELECT * FROM databasemovie")
     fun getMovies(): LiveData<List<DatabaseMovie>>
 
+    @Query("SELECT * FROM databasemovie WHERE id IN (:movieIds)")
+    fun getSimilarMovies(movieIds: List<Int>): LiveData<List<DatabaseMovie>>
+
     @Query("SELECT * FROM databasemovie WHERE id = :id")
     fun getMovie(id: Int): LiveData<DatabaseMovie>
 

@@ -11,8 +11,21 @@ data class NetworkResponseObject(
     val total_pages: Int
 )
 
+data class NetworkMovieResponseObject(
+    val id: Int,
+    val title: String,
+    val vote_average: Double,
+    val poster_path: String?,
+    val backdrop_path: String?,
+    val overview: String = "",
+    val adult: Boolean,
+    val release_date: String = ""
+)
 @JsonClass(generateAdapter = true)
 data class NetworkMovieContainer(val movies: List<NetworkMovie>)
+
+@JsonClass(generateAdapter = true)
+data class NetworkMovieXContainer(val movie: NetworkMovie)
 
 @JsonClass(generateAdapter = true)
 data class NetworkMovie(
@@ -25,6 +38,20 @@ data class NetworkMovie(
     val adult: Boolean,
     val release_date: String = ""
 )
+
+
+fun NetworkMovieXContainer.asDomainModel(): Movie {
+    return Movie(
+            id = movie.id,
+            title = movie.title,
+            vote_average = movie.vote_average,
+            poster_path = movie.poster_path,
+            backdrop_path = movie.backdrop_path,
+            overview = movie.overview,
+            adult = movie.adult,
+            release_date = movie.release_date
+        )
+}
 
 fun NetworkMovieContainer.asDomainModel(): List<Movie> {
     return movies.map {

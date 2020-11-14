@@ -2,6 +2,7 @@ package com.android.movie.nite.features.movieDetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,7 @@ import kotlinx.coroutines.withContext
 private const val ITEM_VIEW_TYPE_HEADER = 0
 private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class MovieDetailAdapter(private val movieDetailViewModel: MovieDetailViewModel,
+class MovieDetailAdapter(private val lifecycleOwner: LifecycleOwner, private val movieDetailViewModel: MovieDetailViewModel,
                          val callback: MovieClick) : ListAdapter<DataItem,
         RecyclerView.ViewHolder>(MovieDetailDiffCallback()) {
     private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -36,18 +37,29 @@ class MovieDetailAdapter(private val movieDetailViewModel: MovieDetailViewModel,
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+//        when (holder) {
+//            is ViewHolder -> {
+//                val movieItem = getItem(position) as DataItem.MovieItem
+//                holder.bind(movieItem.movie, callback )
+//            }
+//        }
+
         when (holder) {
+            is ViewHolderHeader -> {
+                holder.bind( lifecycleOwner, movieDetailViewModel)
+            }
             is ViewHolder -> {
                 val movieItem = getItem(position) as DataItem.MovieItem
                 holder.bind(movieItem.movie, callback )
             }
         }
+
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_HEADER -> ViewHolderHeader.from(parent, movieDetailViewModel)
+            ITEM_VIEW_TYPE_HEADER -> ViewHolderHeader.from(parent)
             ITEM_VIEW_TYPE_ITEM -> ViewHolder.from(parent)
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
@@ -60,12 +72,16 @@ class MovieDetailAdapter(private val movieDetailViewModel: MovieDetailViewModel,
         }
     }
 
-    class ViewHolderHeader(val binding: HeaderBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolderHeader(private val binding: HeaderBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(lifecycleOwner: LifecycleOwner, movieDetailViewModel: MovieDetailViewModel) {
+            binding.lifecycleOwner = lifecycleOwner
+            binding.viewModel = movieDetailViewModel
+            binding.executePendingBindings()
+        }
         companion object {
-            fun from(parent: ViewGroup, movieDetailViewModel: MovieDetailViewModel): ViewHolderHeader {
+            fun from(parent: ViewGroup): ViewHolderHeader {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = HeaderBinding.inflate(layoutInflater, parent, false)
-                binding.viewModel = movieDetailViewModel
                 return ViewHolderHeader(binding)
             }
         }

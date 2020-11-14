@@ -1,5 +1,6 @@
 package com.android.movie.nite.utils
 
+import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -12,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import java.lang.StringBuilder
 
 @BindingAdapter("listDataMovie")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -40,7 +40,19 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
                     .placeholder(R.drawable.loading_animation)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.NORMAL)
-                    .error(R.drawable.ic_broken_image))
+                    .error(R.drawable.ic_broken_image)
+            )
             .into(imgView)
+    }
+}
+
+@BindingAdapter("visibility")
+fun setVisibilityByListSize(view: View, movies: List<Movie>?) {
+    if (movies != null) {
+        if (movies.isNotEmpty()) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
     }
 }

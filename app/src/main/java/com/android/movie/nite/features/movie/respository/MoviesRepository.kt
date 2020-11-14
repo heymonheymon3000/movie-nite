@@ -6,9 +6,7 @@ import com.android.movie.nite.BuildConfig
 import com.android.movie.nite.database.MoviesDatabase
 import com.android.movie.nite.database.asDomainModel
 import com.android.movie.nite.features.movie.domain.Movie
-import com.android.movie.nite.network.MovieService
-import com.android.movie.nite.network.NetworkMovieContainer
-import com.android.movie.nite.network.asDatabaseModel
+import com.android.movie.nite.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -22,26 +20,46 @@ class MoviesRepository @Inject constructor(private val database: MoviesDatabase,
     val movies: LiveData<List<Movie>> =
         Transformations.map(database.movieDao.getMovies()) {
         it.asDomainModel()
-    }
+        }
+
 
     val movie: (Int) -> LiveData<Movie> = { movieId: Int ->
         Transformations.map(database.movieDao.getMovie(movieId)) {
             it.asDomainModel()
-        }
-    }
-
-
-//    LiveData userLiveData = ...;
-//    LiveData userName = Transformations.map(userLiveData, user -> {
-//        return user.firstName + " " + user.lastName
-//    });
+        }}
 
     suspend fun refreshMovies() = withContext(Dispatchers.IO) {
         val network = networkProvider.create(MovieService::class.java)
         val movies  = network.getMoviesAsync(BuildConfig.MOVIE_API_KEY).await()
         val netMovies = NetworkMovieContainer(movies.results)
         database.movieDao.insertAll(netMovies.asDatabaseModel())
+    }
 
+    suspend fun loadMovie(movieId: Int) : Movie = withContext(Dispatchers.IO) {
+        val network = networkProvider.create(MovieService::class.java)
+        val movie  = network.getMovieAsync(movieId, BuildConfig.MOVIE_API_KEY).await()
+        val netMovies = NetworkMovieXContainer(NetworkMovie(
+            movie.id,
+            movie.title,
+            movie.vote_average,
+            movie.poster_path,
+            movie.backdrop_path,
+            movie.overview,
+            movie.adult,
+            movie.release_date
+        ))
+
+
+
+//        database.movieDao.insertAll(netMovies.asDatabaseModel())
+        return@withContext netMovies.asDomainModel()
+    }
+
+    suspend fun getSimilarMovies(movieId: Int) : List<Movie> = withContext(Dispatchers.IO) {
+        val network = networkProvider.create(MovieService::class.java)
+        val listResult = network.getSimilarMoviesAsync(movieId, BuildConfig.MOVIE_API_KEY).await()
+        val netMovies = NetworkMovieContainer(listResult.results)
+        return@withContext netMovies.asDomainModel()
     }
 
     suspend fun getMovie(id: Int) = withContext(Dispatchers.IO) {

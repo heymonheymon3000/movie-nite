@@ -87,16 +87,13 @@ class MovieDetailFragment : Fragment() {
                 state: RecyclerView.State) {
 
                 // here we assume that position 0 is the header
-                if (parent.getChildAdapterPosition(view) == 0) {
-                    return;
+                if (parent.getChildAdapterPosition(view) != 0) {
+                    outRect.set(spacing, spacing, spacing, spacing)
                 }
-
-                outRect.set(spacing, spacing, spacing, spacing)
             }
         })
 
-
-        binding.rvSimilarMovies.adapter = MovieDetailAdapter(viewModel, MovieClick {
+        binding.rvSimilarMovies.adapter = MovieDetailAdapter(this, viewModel, MovieClick {
             findNavController().navigate(
                 MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieDetailFragment(it.id, it.title))
         })
