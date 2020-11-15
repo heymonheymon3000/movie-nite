@@ -12,5 +12,6 @@ data class Movie(
     val backdrop_path: String?,
     val overview: String,
     val adult: Boolean,
-    val release_date: String
+    val release_date: String,
+    val tagline: String,
 ) : Parcelable

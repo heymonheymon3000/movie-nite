@@ -37,25 +37,16 @@ class MovieDetailAdapter(private val lifecycleOwner: LifecycleOwner, private val
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        when (holder) {
-//            is ViewHolder -> {
-//                val movieItem = getItem(position) as DataItem.MovieItem
-//                holder.bind(movieItem.movie, callback )
-//            }
-//        }
-
         when (holder) {
-            is ViewHolderHeader -> {
-                holder.bind( lifecycleOwner, movieDetailViewModel)
-            }
             is ViewHolder -> {
                 val movieItem = getItem(position) as DataItem.MovieItem
                 holder.bind(movieItem.movie, callback )
             }
+            is ViewHolderHeader -> {
+                holder.bind( lifecycleOwner, movieDetailViewModel)
+            }
         }
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -76,8 +67,11 @@ class MovieDetailAdapter(private val lifecycleOwner: LifecycleOwner, private val
         fun bind(lifecycleOwner: LifecycleOwner, movieDetailViewModel: MovieDetailViewModel) {
             binding.lifecycleOwner = lifecycleOwner
             binding.viewModel = movieDetailViewModel
+            // This is important, because it forces the data binding to execute immediately,
+            // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): ViewHolderHeader {
                 val layoutInflater = LayoutInflater.from(parent.context)

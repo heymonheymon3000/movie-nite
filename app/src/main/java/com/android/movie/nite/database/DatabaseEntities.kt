@@ -17,7 +17,8 @@ data class DatabaseMovie constructor(
     val backdrop_path: String?,
     val overview: String,
     val adult: Boolean,
-    val release_date: String
+    val release_date: String,
+    val tagline: String
 ) : Parcelable
 
 fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
@@ -30,7 +31,8 @@ fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
             backdrop_path = it.backdrop_path,
             overview = it.overview,
             adult = it.adult,
-            release_date = it.release_date
+            release_date = it.release_date,
+            tagline = it.tagline
         )
     }
 }
@@ -44,7 +46,8 @@ fun DatabaseMovie.asDomainModel(): Movie {
         backdrop_path = backdrop_path,
         overview = overview,
         adult = adult,
-        release_date = release_date
+        release_date = release_date,
+        tagline = tagline
     )
 }
 

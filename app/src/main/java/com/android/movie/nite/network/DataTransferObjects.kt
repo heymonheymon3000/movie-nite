@@ -19,7 +19,8 @@ data class NetworkMovieResponseObject(
     val backdrop_path: String?,
     val overview: String = "",
     val adult: Boolean,
-    val release_date: String = ""
+    val release_date: String = "",
+    val tagline: String = ""
 )
 @JsonClass(generateAdapter = true)
 data class NetworkMovieContainer(val movies: List<NetworkMovie>)
@@ -36,7 +37,8 @@ data class NetworkMovie(
     val backdrop_path: String?,
     val overview: String = "",
     val adult: Boolean,
-    val release_date: String = ""
+    val release_date: String = "",
+    val tagline: String = ""
 )
 
 
@@ -49,7 +51,8 @@ fun NetworkMovieXContainer.asDomainModel(): Movie {
             backdrop_path = movie.backdrop_path,
             overview = movie.overview,
             adult = movie.adult,
-            release_date = movie.release_date
+            release_date = movie.release_date,
+            tagline = movie.tagline
         )
 }
 
@@ -63,7 +66,8 @@ fun NetworkMovieContainer.asDomainModel(): List<Movie> {
             backdrop_path = it.backdrop_path,
             overview = it.overview,
             adult = it.adult,
-            release_date = it.release_date
+            release_date = it.release_date,
+            tagline = it.tagline
         )
     }
 }
@@ -78,7 +82,8 @@ fun NetworkMovieContainer.asDatabaseModel(): List<DatabaseMovie> {
             backdrop_path = it.backdrop_path,
             overview = it.overview,
             adult = it.adult,
-            release_date = it.release_date
+            release_date = it.release_date,
+            tagline = it.tagline
         )
     }
 }
