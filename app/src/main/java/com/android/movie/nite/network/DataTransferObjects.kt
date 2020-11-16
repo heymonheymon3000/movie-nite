@@ -41,19 +41,18 @@ data class NetworkMovie(
     val tagline: String = ""
 )
 
-
 fun NetworkMovieXContainer.asDomainModel(): Movie {
     return Movie(
-            id = movie.id,
-            title = movie.title,
-            vote_average = movie.vote_average,
-            poster_path = movie.poster_path,
-            backdrop_path = movie.backdrop_path,
-            overview = movie.overview,
-            adult = movie.adult,
-            release_date = movie.release_date,
-            tagline = movie.tagline
-        )
+        id = movie.id,
+        title = movie.title,
+        vote_average = movie.vote_average,
+        poster_path = movie.poster_path,
+        backdrop_path = movie.backdrop_path,
+        overview = movie.overview,
+        adult = movie.adult,
+        release_date = movie.release_date,
+        tagline = movie.tagline
+    )
 }
 
 fun NetworkMovieContainer.asDomainModel(): List<Movie> {

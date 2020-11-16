@@ -2,7 +2,6 @@ package com.android.movie.nite.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.android.movie.nite.features.movie.domain.Movie
 
 @Dao
 interface MovieDao {

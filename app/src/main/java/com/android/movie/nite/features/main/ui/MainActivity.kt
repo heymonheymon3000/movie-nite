@@ -29,9 +29,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navigationController: NavController
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -88,10 +85,6 @@ class MainActivity : AppCompatActivity() {
                     notificationManager.sendNotification(applicationContext.getString(R.string.work_completed), applicationContext)
                 }
             })
-
-//        navigationController = findNavController(R.id.nav_host_fragment)
-//        NavigationUI.setupActionBarWithNavController(this,
-//            navigationController)
     }
 
 
