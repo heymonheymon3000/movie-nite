@@ -31,5 +31,16 @@
         <action
             android:id="@+id/action_movieDetailFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_favoriteMovieFragment"
+            app:destination="@id/favoriteMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteMovieFragment"
+        android:name="com.android.movie.nite.features.favoriteMovie.ui.FavoriteMovieFragment"
+        android:label="FavoriteMovieFragment" >
+        <action
+            android:id="@+id/action_favoriteMovieFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 </navigation>

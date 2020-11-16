@@ -12,7 +12,6 @@ import com.android.movie.nite.R
 import com.android.movie.nite.features.movie.work.RefreshDataWorker
 import com.android.movie.nite.network.CheckNetwork
 import com.android.movie.nite.utils.Constants
-import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

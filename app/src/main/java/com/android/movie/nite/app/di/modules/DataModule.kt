@@ -18,5 +18,5 @@ object DataModule {
     fun provideMovieDB(@ApplicationContext context: Context) =
         Room.databaseBuilder(context.applicationContext,
             MoviesDatabase::class.java,
-            "movie_nite_2").build()
+            "movie_nite_6").build()
 }

@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
                 }
                 R.id.fav_movie -> {
-                    findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)
+                    findNavController(R.id.nav_host_fragment).navigate(R.id.favoriteMovieFragment)
                 }
                 R.id.setting -> {
                     findNavController(R.id.nav_host_fragment).navigate(R.id.movieFragment)

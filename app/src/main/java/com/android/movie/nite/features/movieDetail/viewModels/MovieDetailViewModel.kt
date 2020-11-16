@@ -31,15 +31,33 @@ class MovieDetailViewModel @ViewModelInject constructor(
     val stars: LiveData<Int>
         get() = _stars
 
+    private val  _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean>
+        get() = _isFavorite
+
+
     init {
         getMovie(savedStateHandle.get<Int>("movie_id")!!)
         getSimilarMovies(savedStateHandle.get<Int>("movie_id")!!)
     }
 
+    fun onClickFavorite() {
+        viewModelScope.launch {
+            if(_isFavorite.value == false) {
+                moviesRepository.addFavoriteMovie(_movie.value!!)
+                _isFavorite.value = true
+            } else {
+                moviesRepository.removeFavoriteMovie(savedStateHandle.get<Int>("movie_id")!!)
+                _isFavorite.value = false
+            }
+        }
+    }
+
     private fun getMovie(movieId: Int) {
         viewModelScope.launch {
             _movie.value = moviesRepository.getMovie(movieId)
-            _stars.value  = _movie.value!!.vote_average.toInt()?.div(2)
+            _stars.value  = _movie.value!!.vote_average.toInt().div(2)
+            _isFavorite.value = moviesRepository.exists(movieId)
         }
     }
 

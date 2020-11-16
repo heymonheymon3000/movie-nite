@@ -23,6 +23,8 @@ class MovieViewModel @ViewModelInject constructor(
 
     val movielist = moviesRepository.movies
 
+    val favoriteMovielist = moviesRepository.favoriteMovies
+
     init {
         if(Constants.isNetworkConnected) {
             viewModelScope.launch {

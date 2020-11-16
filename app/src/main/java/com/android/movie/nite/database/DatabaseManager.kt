@@ -22,7 +22,23 @@ interface MovieDao {
     suspend fun deleteAll()
 }
 
-@Database(entities = [DatabaseMovie::class], version = 1, exportSchema = false)
+@Dao
+interface FavoriteMovieDao {
+    @Query("SELECT * FROM databasefavoritemovie")
+    fun getMovies(): LiveData<List<DatabaseFavoriteMovie>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(movie: DatabaseFavoriteMovie)
+
+    @Query("delete from databasefavoritemovie WHERE id = :id")
+    suspend fun delete(id: Int)
+
+    @Query("SELECT EXISTS (SELECT 1 FROM databasefavoritemovie WHERE id = :id)")
+    fun exists(id: Int): Boolean
+}
+
+@Database(entities = [DatabaseMovie::class, DatabaseFavoriteMovie::class], version = 1, exportSchema = false)
 abstract class MoviesDatabase : RoomDatabase() {
     abstract val movieDao: MovieDao
+    abstract val favoriteMovieDao: FavoriteMovieDao
 }

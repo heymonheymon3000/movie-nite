@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter("listDataMovie")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -55,4 +56,15 @@ fun setVisibilityByListSize(view: View, movies: List<Movie>?) {
             view.visibility = View.GONE
         }
     }
+}
+
+@BindingAdapter("state")
+fun setFavoriteState(fab: FloatingActionButton, isFavorite: Boolean) {
+   if(isFavorite) {
+       fab.clearAnimation()
+       fab.setImageResource(R.drawable.ic_favorite)
+   } else {
+       fab.clearAnimation()
+       fab.setImageResource(R.drawable.ic_favorite_border)
+   }
 }

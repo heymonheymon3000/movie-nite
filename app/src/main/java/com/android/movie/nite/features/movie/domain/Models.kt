@@ -1,6 +1,8 @@
 package com.android.movie.nite.features.movie.domain
 
 import android.os.Parcelable
+import com.android.movie.nite.database.DatabaseFavoriteMovie
+import com.android.movie.nite.database.DatabaseMovie
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
