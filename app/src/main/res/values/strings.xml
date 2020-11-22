@@ -31,4 +31,6 @@
     <string name="notification_title">MOVIE NITE</string>
     <string name="hell">hell</string>
     <string name="title_similar_movies">Similar Movies</string>
+    <string name="app_charging">App charging</string>
+    <string name="app_not_charging">App not charging</string>
 </resources>

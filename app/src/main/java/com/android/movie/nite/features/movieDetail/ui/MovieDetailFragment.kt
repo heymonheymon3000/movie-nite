@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.movie.nite.R
 import com.android.movie.nite.databinding.FragmentMovieDetailBinding
 import com.android.movie.nite.features.movie.ui.adapter.MovieClick
@@ -22,11 +23,18 @@ import com.android.movie.nite.features.movieDetail.viewModels.MovieDetailViewMod
 import com.android.movie.nite.utils.calculateNoOfColumns
 import com.android.movie.nite.utils.dpFromPx
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : SwipeRefreshLayout.OnRefreshListener, Fragment() {
     private lateinit var binding: FragmentMovieDetailBinding
     private val viewModel: MovieDetailViewModel by viewModels()
+
+    private val viewModelJob = SupervisorJob()
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +61,9 @@ class MovieDetailFragment : Fragment() {
                 }
             }
         )
+
+        binding.swipeRefreshLayout.setOnRefreshListener(this);
+
 
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -97,5 +108,11 @@ class MovieDetailFragment : Fragment() {
             findNavController().navigate(
                 MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieDetailFragment(it.id, it.title))
         })
+    }
+
+    override fun onRefresh() {
+        viewModelScope.launch {
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 }
