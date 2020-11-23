@@ -6,6 +6,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.android.movie.nite.features.movie.domain.Movie
 import com.android.movie.nite.features.movie.respository.MoviesRepository
+import com.android.movie.nite.features.movieDetail.ui.MovieDetailFragmentArgs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,12 +17,11 @@ class MovieDetailViewModel @ViewModelInject constructor(
     private var moviesRepository: MoviesRepository,
     @Assisted private val savedStateHandle: SavedStateHandle) : AndroidViewModel(application) {
 
+
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val  _movie = MutableLiveData<Movie>()
-    val movie: LiveData<Movie>
-        get() = _movie
+    val movie = savedStateHandle.get<Int>("movie_id")?.let { moviesRepository.movie(it) }
 
     private val  _movieList = MutableLiveData<List<Movie>>()
     val movieList: LiveData<List<Movie>>
@@ -35,16 +35,17 @@ class MovieDetailViewModel @ViewModelInject constructor(
     val isFavorite: LiveData<Boolean>
         get() = _isFavorite
 
-
     init {
-        getMovie(savedStateHandle.get<Int>("movie_id")!!)
+        storeMovie(savedStateHandle.get<Int>("movie_id")!!)
         getSimilarMovies(savedStateHandle.get<Int>("movie_id")!!)
     }
 
     fun onClickFavorite() {
         viewModelScope.launch {
             if(_isFavorite.value == false) {
-                moviesRepository.addFavoriteMovie(_movie.value!!)
+                if (movie != null) {
+                    movie.value?.let { moviesRepository.addFavoriteMovie(it) }
+                }
                 _isFavorite.value = true
             } else {
                 moviesRepository.removeFavoriteMovie(savedStateHandle.get<Int>("movie_id")!!)
@@ -53,11 +54,9 @@ class MovieDetailViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getMovie(movieId: Int) {
+    private fun storeMovie(movieId: Int) {
         viewModelScope.launch {
-            _movie.value = moviesRepository.getMovie(movieId)
-            _stars.value  = _movie.value!!.vote_average.toInt().div(2)
-            _isFavorite.value = moviesRepository.exists(movieId)
+             moviesRepository.storeMovie(movieId)
         }
     }
 

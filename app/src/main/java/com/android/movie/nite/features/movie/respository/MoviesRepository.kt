@@ -29,19 +29,29 @@ class MoviesRepository @Inject constructor(private val database: MoviesDatabase,
             it.asDomainModel()
         }
 
+    val movie: (Int) -> LiveData<Movie?> = { movieId ->
+        Transformations.map(database.movieDao.getMovie(movieId)) {
+            it?.asDomainModel()
+        }
+    }
+
     suspend fun refreshMovies() = withContext(Dispatchers.IO) {
         val network = networkProvider.create(MovieService::class.java)
         val movies  = network.getMoviesAsync(BuildConfig.MOVIE_API_KEY).await()
         database.movieDao.insertAll(NetworkMovieContainer(movies.results).asDatabaseModel())
     }
 
-    suspend fun getMovie(movieId: Int) : Movie = withContext(Dispatchers.IO) {
-        val network = networkProvider.create(MovieService::class.java)
-        val movie  = network.getMovieAsync(movieId, BuildConfig.MOVIE_API_KEY).await()
-        return@withContext NetworkMovieXContainer(NetworkMovie(
-            movie.id, movie.title, movie.vote_average, movie.poster_path,
-            movie.backdrop_path, movie.overview, movie.adult, movie.release_date, movie.tagline
-        )).asDomainModel()
+    suspend fun storeMovie(movieId: Int) = withContext(Dispatchers.IO) {
+        if(!database.movieDao.exists(movieId)) {
+            val network = networkProvider.create(MovieService::class.java)
+            val movie  = network.getMovieAsync(movieId, BuildConfig.MOVIE_API_KEY).await()
+            val insertMovie = NetworkMovieXContainer(NetworkMovie(
+                movie.id, movie.title, movie.vote_average, movie.poster_path,
+                movie.backdrop_path, movie.overview, movie.adult, movie.release_date, movie.tagline
+            )).asDatabaseModel()
+
+            database.movieDao.insert(insertMovie)
+        }
     }
 
     suspend fun exists(movieId: Int) : Boolean = withContext(Dispatchers.IO) {

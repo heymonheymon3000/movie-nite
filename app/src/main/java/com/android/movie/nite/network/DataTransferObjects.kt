@@ -86,3 +86,17 @@ fun NetworkMovieContainer.asDatabaseModel(): List<DatabaseMovie> {
         )
     }
 }
+
+fun NetworkMovieXContainer.asDatabaseModel(): DatabaseMovie {
+    return DatabaseMovie(
+        id = movie.id,
+        title = movie.title,
+        vote_average = movie.vote_average,
+        poster_path = movie.poster_path,
+        backdrop_path = movie.backdrop_path,
+        overview = movie.overview,
+        adult = movie.adult,
+        release_date = movie.release_date,
+        tagline = movie.tagline
+    )
+}

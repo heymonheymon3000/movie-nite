@@ -12,16 +12,22 @@ interface MovieDao {
     fun getSimilarMovies(movieIds: List<Int>): LiveData<List<DatabaseMovie>>
 
     @Query("SELECT * FROM databasemovie WHERE id = :id")
-    fun getMovie(id: Int): LiveData<DatabaseMovie>
+    fun getMovie(id: Int): LiveData<DatabaseMovie?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<DatabaseMovie>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(movies: DatabaseMovie)
 
     @Query("delete from databasemovie")
     suspend fun deleteAll()
 
     @Query("SELECT NOT EXISTS (SELECT 1 FROM databasemovie)")
     fun isEmpty(): Boolean
+
+    @Query("SELECT EXISTS (SELECT 1 FROM databasemovie WHERE id = :id)")
+    fun exists(id: Int): Boolean
 }
 
 @Dao
