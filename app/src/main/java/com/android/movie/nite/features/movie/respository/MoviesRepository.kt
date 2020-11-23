@@ -48,6 +48,10 @@ class MoviesRepository @Inject constructor(private val database: MoviesDatabase,
         return@withContext database.favoriteMovieDao.exists(movieId)
     }
 
+    suspend fun isEmpty() : Boolean = withContext(Dispatchers.IO) {
+        return@withContext database.movieDao.isEmpty()
+    }
+
     suspend fun  addFavoriteMovie(movie: Movie) = withContext(Dispatchers.IO) {
         Timber.i("Inserting ${movie.title}")
         database.favoriteMovieDao.insert(

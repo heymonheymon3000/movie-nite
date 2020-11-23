@@ -19,6 +19,9 @@ interface MovieDao {
 
     @Query("delete from databasemovie")
     suspend fun deleteAll()
+
+    @Query("SELECT NOT EXISTS (SELECT 1 FROM databasemovie)")
+    fun isEmpty(): Boolean
 }
 
 @Dao

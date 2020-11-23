@@ -28,7 +28,9 @@ class MovieViewModel @ViewModelInject constructor(
     init {
         if(Constants.isNetworkConnected) {
             viewModelScope.launch {
-                moviesRepository.refreshMovies()
+                if(moviesRepository.isEmpty()) {
+                    moviesRepository.refreshMovies()
+                }
             }
         } else {
             _showNoInternetSnackbar.value = true
