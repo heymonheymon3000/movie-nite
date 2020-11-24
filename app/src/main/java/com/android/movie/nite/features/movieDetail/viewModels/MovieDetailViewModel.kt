@@ -6,7 +6,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.android.movie.nite.features.movie.domain.Movie
 import com.android.movie.nite.features.movie.respository.MoviesRepository
-import com.android.movie.nite.features.movieDetail.ui.MovieDetailFragmentArgs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -57,6 +56,10 @@ class MovieDetailViewModel @ViewModelInject constructor(
     private fun storeMovie(movieId: Int) {
         viewModelScope.launch {
              moviesRepository.storeMovie(movieId)
+            if (movie != null) {
+                _stars.value = movie.value?.vote_average?.div(2)?.toInt()
+                _isFavorite.value = moviesRepository.exists(movieId)
+            }
         }
     }
 
