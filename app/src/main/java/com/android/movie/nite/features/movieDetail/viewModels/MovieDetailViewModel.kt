@@ -6,6 +6,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.android.movie.nite.features.movie.domain.Movie
 import com.android.movie.nite.features.movie.respository.MoviesRepository
+import com.android.movie.nite.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,11 +17,10 @@ class MovieDetailViewModel @ViewModelInject constructor(
     private var moviesRepository: MoviesRepository,
     @Assisted private val savedStateHandle: SavedStateHandle) : AndroidViewModel(application) {
 
-
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    val movie = savedStateHandle.get<Int>("movie_id")?.let { moviesRepository.movie(it) }
+    val movie = savedStateHandle.get<Int>(Constants.MOVIE_ID)?.let { moviesRepository.movie(it) }
 
     private val  _movieList = MutableLiveData<List<Movie>>()
     val movieList: LiveData<List<Movie>>
@@ -35,8 +35,8 @@ class MovieDetailViewModel @ViewModelInject constructor(
         get() = _isFavorite
 
     init {
-        storeMovie(savedStateHandle.get<Int>("movie_id")!!)
-        getSimilarMovies(savedStateHandle.get<Int>("movie_id")!!)
+        storeMovie(savedStateHandle.get<Int>(Constants.MOVIE_ID)!!)
+        getSimilarMovies(savedStateHandle.get<Int>(Constants.MOVIE_ID)!!)
     }
 
     fun onClickFavorite() {
@@ -47,7 +47,7 @@ class MovieDetailViewModel @ViewModelInject constructor(
                 }
                 _isFavorite.value = true
             } else {
-                moviesRepository.removeFavoriteMovie(savedStateHandle.get<Int>("movie_id")!!)
+                moviesRepository.removeFavoriteMovie(savedStateHandle.get<Int>(Constants.MOVIE_ID)!!)
                 _isFavorite.value = false
             }
         }

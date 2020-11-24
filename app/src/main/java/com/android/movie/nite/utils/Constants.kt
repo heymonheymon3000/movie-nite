@@ -7,4 +7,5 @@ object Constants {
     var workerId : UUID = UUID.randomUUID()
     val TOPIC : String = "movie_refresh"
     val IMAGE_URL : String = "image.tmdb.org/t/p/original"
+    val MOVIE_ID : String =  "movie_id"
 }

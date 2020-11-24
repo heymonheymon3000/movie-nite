@@ -5,7 +5,7 @@
     <application>
         <activity
             android:name="com.android.movie.nite.HiltTestActivity"
-            android:exported="false"  />
+            android:exported="false" />
     </application>
 
 </manifest>

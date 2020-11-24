@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.android.movie.nite">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,6 +28,11 @@
             android:theme="@style/LoginTheme"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".features.main.ui.MainActivity"/>
+
+        <activity
+            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+            tools:replace="android:launchMode"
+            android:launchMode="standard" />
 
         <service
             android:name=".features.movie.service.MovieFirebaseMessagingService"
