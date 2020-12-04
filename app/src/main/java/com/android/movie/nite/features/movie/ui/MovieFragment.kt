@@ -1,5 +1,6 @@
 package com.android.movie.nite.features.movie.ui
 
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,6 +55,7 @@ class MovieFragment : Fragment() {
 
         return binding.root
     }
+
 
     private fun setupRecyclerView() {
         val spanCount = calculateNoOfColumns(

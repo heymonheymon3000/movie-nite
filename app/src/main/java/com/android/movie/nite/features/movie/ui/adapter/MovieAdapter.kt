@@ -11,8 +11,15 @@ import com.android.movie.nite.features.movie.domain.Movie
 class MovieAdapter(private var callback: MovieClick) :
     ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallback) {
 
-    class MovieViewHolder(var binding: ListItemMovieBinding):
-        RecyclerView.ViewHolder(binding.root) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        return MovieViewHolder(ListItemMovieBinding.inflate(LayoutInflater.from(parent.context)))
+    }
+
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.bind(getItem(position), callback)
+    }
+
+    class MovieViewHolder(var binding: ListItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie, callback: MovieClick) {
             binding.movie = movie
             binding.movieCallback = callback
@@ -30,14 +37,6 @@ class MovieAdapter(private var callback: MovieClick) :
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(ListItemMovieBinding.inflate(LayoutInflater.from(parent.context)))
-    }
-
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position)!!, callback)
     }
 }
 
